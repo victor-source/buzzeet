@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
    
-<!-- Mirrored from iqonic.design/themes/socialv/html/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 17:02:19 GMT -->
+<!-- Mirrored from iqonic.design/themes/socialv/html/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 17:02:24 GMT -->
 <head>
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>SocialV - Responsive Bootstrap 4 Admin Dashboard Template</title>
+      <title>Signup - Buzzeet</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="images/favicon.ico" />
       <!-- Bootstrap CSS -->
@@ -42,17 +42,17 @@
                             <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1" data-margin="0">
                                 <div class="item">
                                     <img src="images/login/1.png" class="img-fluid mb-4" alt="logo">
-                                    <h4 class="mb-1 text-white">Find new friends</h4>
+                                    <h4 class="mb-1 text-white">Manage your orders</h4>
                                     <p>It is a long established fact that a reader will be distracted by the readable content.</p>
                                 </div>
                                 <div class="item">
-                                    <img src="images/login/2.png" class="img-fluid mb-4" alt="logo"> 
-                                    <h4 class="mb-1 text-white">Connect with the world</h4>
+                                    <img src="images/login/1.png" class="img-fluid mb-4" alt="logo">
+                                    <h4 class="mb-1 text-white">Manage your orders</h4>
                                     <p>It is a long established fact that a reader will be distracted by the readable content.</p>
                                 </div>
                                 <div class="item">
-                                    <img src="images/login/3.png" class="img-fluid mb-4" alt="logo">
-                                    <h4 class="mb-1 text-white">Create new events</h4>
+                                    <img src="images/login/1.png" class="img-fluid mb-4" alt="logo">
+                                    <h4 class="mb-1 text-white">Manage your orders</h4>
                                     <p>It is a long established fact that a reader will be distracted by the readable content.</p>
                                 </div>
                             </div>
@@ -60,27 +60,30 @@
                     </div>
                     <div class="col-md-6 bg-white pt-5">
                         <div class="sign-in-from">
-                            <h1 class="mb-0">Sign in</h1>
+                            <h1 class="mb-0">Sign Up</h1>
                             <p>Enter your email address and password to access admin panel.</p>
                             <form class="mt-4">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control mb-0" id="exampleInputEmail1" placeholder="Enter email">
+                                    <label for="exampleInputEmail1">Your Full Name</label>
+                                    <input type="email" class="form-control mb-0" id="exampleInputEmail1" placeholder="Your Full Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Email address</label>
+                                    <input type="email" class="form-control mb-0" id="exampleInputEmail2" placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <a href="#" class="float-right">Forgot password?</a>
                                     <input type="password" class="form-control mb-0" id="exampleInputPassword1" placeholder="Password">
                                 </div>
                                 <div class="d-inline-block w-100">
                                     <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Remember Me</label>
+                                        <label class="custom-control-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
                                     </div>
-                                    <button type="submit" class="btn btn-primary float-right">Sign in</button>
+                                    <button type="submit" class="btn btn-primary float-right">Sign Up</button>
                                 </div>
                                 <div class="sign-info">
-                                    <span class="dark-color d-inline-block line-height-2">Don't have an account? <a href="#">Sign up</a></span>
+                                    <span class="dark-color d-inline-block line-height-2">Already Have Account ? <a href="#">Log In</a></span>
                                     <ul class="iq-social-media">
                                         <li><a href="#"><i class="ri-facebook-box-line"></i></a></li>
                                         <li><a href="#"><i class="ri-twitter-line"></i></a></li>
@@ -108,11 +111,11 @@
       <script src="js/jquery.counterup.min.js"></script>
       <!-- Wow JavaScript -->
       <script src="js/wow.min.js"></script>
-      <!-- Apexcharts JavaScript -->
-      <script src="js/apexcharts.js"></script>
       <!-- lottie JavaScript -->
       <script src="js/lottie.js"></script>
-      <!-- Slick JavaScript --> 
+      <!-- Apexcharts JavaScript -->
+      <script src="js/apexcharts.js"></script>
+      <!-- Slick JavaScript -->
       <script src="js/slick.min.js"></script>
       <!-- Select2 JavaScript -->
       <script src="js/select2.min.js"></script>
@@ -128,5 +131,5 @@
       <script src="js/custom.js"></script>
    </body>
 
-<!-- Mirrored from iqonic.design/themes/socialv/html/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 17:02:24 GMT -->
+<!-- Mirrored from iqonic.design/themes/socialv/html/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 17:02:24 GMT -->
 </html>
