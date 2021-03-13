@@ -9,12 +9,11 @@ if (isset($_POST['login'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
   $password = sha1($password);
-  $sql = $conn->query("SELECT  * FROM users WHERE (email='$email') && password='$password' ") or die(mysqli_error($conn));
-    $exist = mysqli_num_rows($sql);
-          if($exist>0){
-    $_SESSION['user']=$email;
-    header("location:news-feed.php");
-  }else{
+ $auth = mysqli_num_rows($conn->query("select * from users where email='$email' and password='$password'"));
+        if($auth>0){
+            $_SESSION['user']=$email;
+            echo "<script> window.location.replace('location:news-feed.php')</script>";
+        }else{
     $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
           <strong>Email and password do not match.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -4,12 +4,56 @@ include 'engine/config.php';
 if (isset($_SESSION['user'])) {
  header("location:news-feed.php");
 }else{
-  if(isset($_POST['signup'])){
-      $name = $_POST['name'];
-      $email = $_POST['email'];
-      $phone = $_POST['phone'];
 
-  }
+  $msg = "";
+        if(isset($_POST["signup"])){
+            $email = $_POST['emailid'];
+            $username = $_POST['username'];
+            $checkEmail = mysqli_num_rows($conn->query("select * from users where email = '$email'"));
+            $checkUsername = mysqli_num_rows($conn->query("select * from users where username = '$username'"));
+            if($checkEmail>0){
+               $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Email already exists.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+            }else if($checkUsername>0){
+               $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Username already exists.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+            }else{
+              $password1 = $_POST['password1'];
+              $password2 = $_POST['password2'];
+              if ($password2 != $password1) {
+                $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Passwords are not equal
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+              }else{//echo "<script>alert('yes');</script>";
+                $password = sha1($password1);
+                $name = $_POST['name'];
+                $phone = $_POST['phone'];
+                $date = date("d-m-Y");
+                $sql=$conn->query("insert into users(username, email, phone, password, name,regdate)values('$username', '$email', '$phone', '$password', '$name', '$date')");
+                if ($sql) {
+                   $msg = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Successfully Registered, Regiirecting to Buzzeet
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+        $_SESSION['user']=$email;
+        header("location:news-feed.php");
+                }
+              }
+            }
+          }
 }
 ?>
 <!Doctype html>
@@ -69,7 +113,7 @@ if (isset($_SESSION['user'])) {
                        <h3>signup</h3>
                     </center>
 
-                        <form>
+                        <form method="POST"><?php echo $msg;?>
 
                           <div class="form-group">
                           
@@ -86,13 +130,46 @@ if (isset($_SESSION['user'])) {
                           <div class="form-group">
                             <input type="number" name="phone" class="form-control" placeholder="phone">
                           </div>
+                          <style type="text/css">
+                            .text-danger{
+                              color:red;
+                            }
+                            .text-success{
+                              color: green;
+                            }
+                          </style>
+                           <script>
+                              function onsel(){
+                                var password1 = document.getElementById("password1").value;
+                                var password2 = document.getElementById("password2").value;
+                                var message = document.getElementById('password_error');
+                                var button = document.getElementById('button').disabled;
+                               if (password1=='') {
+                              message.innerHTML="Password can't be empty";
+                              message.class="text-danger"
+                               }else if (password2=='') {
+                                message.innerHTML=" Confirm Password can't be empty";
+                                message.class="text-danger"
+                                button='true';
+                               }else if (password2 != password1) {
+                                message.innerHTML=" Passwords do not match";
+                                message.class="text-danger"
+                                button="true";
+                               }else{
+                                message.innerHTML="password matched";
+                                message.class = "text-success"
+                                button="false";
+                               }
+                          }
+                          </script>
                           <div class="form-group">
-                            <input type="password" name="password1" class="form-control" placeholder="password">
+                            <input type="password" name="password1" id="password1"  class="form-control" placeholder="password" autocomplete="off">
                           </div>
                           <div class="form-group">
-                            <input type="password" name="password2" class="form-control" placeholder="confirm Password">
+                            <input type="password" name="password2" id="password2" onkeyup="onsel()" class="form-control" placeholder="confirm Password" autocomplete="off">
+                            <span class="" id="password_error"></span>
                           </div>
-                          <input type="submit" name="signup" class="btn btn-primary" value="Signup">
+                          <input type="submit" name="signup" class="btn btn-primary" id="button"  value="Signup">
                         </form>
                  
                   </div>
@@ -104,6 +181,7 @@ if (isset($_SESSION['user'])) {
               </form>
         </section>
         <script>
+      
 //This function checks email-availability-status
 
 function checkemailAvailability() {

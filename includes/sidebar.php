@@ -1,3 +1,29 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Buzzeet</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Typography CSS -->
+    <link rel="stylesheet" href="css/typography.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body class="right-column-fixed">
+    <!-- loader Start -->
+    <div id="loading">
+        <div id="loading-center">
+        </div>
+    </div>
 <div class="wrapper">
         <!-- Sidebar  -->
         <div class="iq-sidebar">
@@ -5,10 +31,10 @@
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
                         <li class="active">
-                            <a href="index.html" class="iq-waves-effect"><i class="las la-newspaper"></i><span>Newsfeed</span></a>
+                            <a href="index.php" class="iq-waves-effect"><i class="las la-newspaper"></i><span>Newsfeed</span></a>
                         </li>
                         <li>
-                            <a href="profile.html" class="iq-waves-effect"><i class="las la-user"></i><span>Profile</span></a>
+                            <a href="profile.php" class="iq-waves-effect"><i class="las la-user"></i><span>Profile</span></a>
                         </li>
                         <li>
                             <a href="friend-list.html" class="iq-waves-effect"><i class="las la-user-friends"></i><span>Friend Lists</span></a>
