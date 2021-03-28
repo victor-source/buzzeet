@@ -1,3 +1,14 @@
+<?php
+session_start(); 
+include 'engine/config.php';
+
+if(!isset($_SESSION['user'])) {
+header("location:signin.php");
+}else{
+    $email=$_SESSION['user'];
+    $show=mysqli_fetch_array($conn->query("select * from users where email='$email'"));
+}
+?>
 <?php include 'includes/sidebar.php';?>
         <!-- TOP Nav Bar -->
         <?php include 'includes/topbar.php';?>

@@ -12,7 +12,7 @@ if (isset($_POST['login'])) {
  $auth = mysqli_num_rows($conn->query("select * from users where email='$email' and password='$password'"));
         if($auth>0){
             $_SESSION['user']=$email;
-            echo "<script> window.location.replace('location:news-feed.php')</script>";
+            echo "<script> window.location.replace('news-feed.php')</script>";
         }else{
     $msg = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
           <strong>Email and password do not match.

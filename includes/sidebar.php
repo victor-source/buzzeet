@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/images-grid.css">
+    <script src="js/jquery-ui.css"></script>
+   
+<script src="ckeditor/ckeditor.js"></script>
+    <script src="ckeditor/sample/js/styles.js"></script>
+    <link rel="stylesheet" href="css/magnific-popup">
 </head>
 
 <body class="right-column-fixed">

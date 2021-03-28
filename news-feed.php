@@ -169,25 +169,26 @@ header("location:signin.php");
                                         </li>
                                     </ul>
                                 </div>
-<?php
-    
-    if (isset($_POST['submit'])) {
-        $post_id = rand(00000,11111);
-        $caption = $_POST['caption'];
-        $imageCount = count($_FILES['file']['name']);
-        for ($i=0; $i < $imageCount; $i++) { 
-            $imageName = $_FILES['file']['name'][$i];
-            $imageTempName = $_FILES['file']['tmp_name'][$i];
-            $targetPath = "./uploads/".$imageName;
-            if (move_uploaded_file($imageTempName, $targetPath)) {
-               $sql = $conn->query("INSERT INTO media(image,post_id)VALUES('$imageName','$post_id')");
-               $sql2 = $conn->query("INSERT INTO posts(caption,post_id,email)VALUES('$caption','$post_id','$email')");
-            }
+                                <?php
+                                    
+                                    if (isset($_POST['submit'])) {
+                                        $post_id = rand(00000,11111);
+                                        $caption = $_POST['caption'];
+                                        $imageCount = count($_FILES['file']['name']);
+                                        for ($i=0; $i < $imageCount; $i++) { 
+                                            $imageName = $_FILES['file']['name'][$i];
+                                            $imageTempName = $_FILES['file']['tmp_name'][$i];
+                                            $targetPath = "./uploads/".$imageName;
+                                            if (move_uploaded_file($imageTempName, $targetPath)) {
+                                               $sql2 = $conn->query("INSERT INTO posts(caption,post_id,email)VALUES('$caption','$post_id','$email')");
+                                               $sql = $conn->query("INSERT INTO media(image,post_id)VALUES('$imageName','$post_id')");
 
-        }
-     
-    }
-?>
+                                            }
+
+                                        }
+                                     
+                                    }
+                                ?>
 
 
                                 <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="post-modalLabel" aria-hidden="true" style="display: none;">
@@ -203,7 +204,10 @@ header("location:signin.php");
                                                         <img src="<?php echo $show['profile_photo'];?>" alt="userimg" class="avatar-60 rounded-circle img-fluid">
                                                     </div>
                                                     <form action="" method="post" class="post-text ml-3 w-100" enctype="multipart/form-data">
-                                                        <textarea class="form-control rounded" placeholder="Write something here..." style="border:none;" name="caption"></textarea>
+                                                        <textarea class="form-control rounded" maxlength="2000" placeholder="Write something here..." style="border:none;" name="caption"></textarea>
+                                                        <script type="text/javascript">
+                                                        CKEDITOR.replace( 'caption' );
+                                                    </script>
                                                         <input type="file" name="file[]" multiple >
                                                         <button type="submit" class="btn btn-primary d-block w-100 mt-3" name="submit" value="upload">Post</button>
                                                     </form>
@@ -295,6 +299,52 @@ header("location:signin.php");
                                             </div>
                                         </div>
                                     </div>
+                                    <style>.popup{
+   
+}
+.popup img{
+   
+    cursor: pointer
+}
+.show{
+    z-index: 999;
+    display: none;
+}
+.show .overlay{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.66);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.show .img-show{
+    width: 600px;
+    height: 400px;
+    background: #FFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden
+}
+.img-show span{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 99;
+    cursor: pointer;
+}
+.img-show img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+/*End style*/
+
+}</style>
                                     <div class="mt-3">
                                         <p><?php echo $result->caption?></p>
                                     </div>
@@ -302,100 +352,75 @@ header("location:signin.php");
                                         <div class="d-flex">
                                             <?php
                                             $post_id = $result->post_id;
-                                            $picture = mysqli_fetch_array($conn->query("select * from media where post_id = '$post_id'"));
+                                            
                                             $images = mysqli_num_rows($conn->query("select * from media where post_id='$post_id'"));
                                             if($images==1){
+                                                for ($i=0; $i < $images ; $i++) { 
+                                                   $picture = mysqli_fetch_array($conn->query("select * from media where post_id = '$post_id'"));
                                             ?>
+
                                             <div class="user-post text-center">
-                                        <a href="javascript:void();"><img src="images/page-img/p5.jpg" alt="post-image" class="img-fluid rounded w-100 mt-3"></a>
-                                    </div><?php }else if($images==2){?>
+                                        <a href="javascript:void();"><img src="uploads/<?php echo $picture['image']?>" alt="post-image" class="img-fluid rounded w-100 mt-3"></a>
+                                    </div><?php }}else if($images==2){
+                                                    
+                                        ?>
 
                                             <div class="row">
+                                                <?php
+                                                   $sql = "SELECT * from media where post_id ='$post_id'";
+                                                   $query = $dbh->prepare($sql);
+                                                   $query->execute();
+                                                   $results=$query->fetchAll(PDO::FETCH_OBJ);
+                                                   $cnt=1;
+                                                   if($query->rowCount() > 0){
+                                                   foreach($results as $result)
+                                               {?>
                                                 <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
+                                                    <a href="javascript:void();"><img style="object-fit: cover;width: 260px;height: 120px;" src="uploads/<?php echo $result->image ?>" alt="post-image" class="img-fluid rounded w-100"></a>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p3.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
+                                               <?php }} ?>
                                             </div>
 
                                     <?php }else if($images == 3){?>
-                                            <div class="col-md-6">
-                                                <a href="javascript:void();"><img src="images/page-img/p2.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                            </div>
-                                            <div class="col-md-6 row m-0 p-0">
-                                                <div class="col-sm-12">
-                                                    <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
+                                        
+                                        <div class="row">
+                                                <?php
+                                                   $sql = "SELECT * from media where post_id ='$post_id'";
+                                                   $query = $dbh->prepare($sql);
+                                                   $query->execute();
+                                                   $results=$query->fetchAll(PDO::FETCH_OBJ);
+                                                   $cnt=1;
+                                                   if($query->rowCount() > 0){
+                                                   foreach($results as $result)
+                                               {?>
+                                                <div class="col-sm-12 mt-3 popup">
+                                                    <img style="object-fit: cover;width: 260px;height: 160px;" src="uploads/<?php echo $result->image ?>" alt="post-image" class="img-fluid rounded w-100">
                                                 </div>
-                                                <div class="col-sm-12 mt-3">
-                                                    <a href="javascript:void();"><img src="images/page-img/p3.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
+                                               <?php }} ?>
                                             </div>
                                         <?php }else if($images == 4){?>
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
+                                                <?php
+                                                   $sql = "SELECT * from media where post_id ='$post_id'";
+                                                   $query = $dbh->prepare($sql);
+                                                   $query->execute();
+                                                   $results=$query->fetchAll(PDO::FETCH_OBJ);
+                                                   $cnt=1;
+                                                   if($query->rowCount() > 0){
+                                                   foreach($results as $result)
+                                               {?>
+                                                <div class="col-md-6 mt-3 popup">
+                                                    <img style="object-fit: cover;width: 260px;height: 160px;" src="uploads/<?php echo $result->image ?>" alt="post-image" class="img-fluid rounded w-100">
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p3.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p3.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
+                                               <?php }} ?>
                                             </div>
-                                        <?php }else if($images == 5){?>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p3.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                </div>
-                                                 <div class="col-md-6">
-                                                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<?php echo $picture['id'];?>">
-                                                   2 more
-                                                   </button>
-                                                </div>
-                                                
-
-                                            </div>
-                                             <div class="modal fade" id="<?php echo $picture['id'];?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                  <div class="modal-dialog modal-dialog-centered" role="document">
-                                                     <div class="modal-content">
-                                                        <div class="modal-header">
-                                                           <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                           <span aria-hidden="true">&times;</span>
-                                                           </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <a href="javascript:void();"><img src="images/page-img/p3.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                           <button type="button" class="btn btn-primary">Save changes</button>
-                                                        </div>
-                                                     </div>
-                                                  </div>
-                                               </div>
+                                        
                                         <?php }else{?>
 
                                         <?php }?>
                                         </div>
                                     </div>
+                                    
                                     <div class="comment-area mt-3">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="like-block position-relative d-flex align-items-center">
@@ -862,6 +887,13 @@ header("location:signin.php");
             </div>
         </div>
     </footer>
+    <div class="show">
+  <div class="overlay"></div>
+  <div class="img-show">
+    <span>X</span>
+    <img src="">
+  </div>
+</div>
     <!-- Footer END -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -908,7 +940,21 @@ header("location:signin.php");
     <!-- Custom JavaScript -->
     <script src="js/custom.js"></script>
 </body>
-
+<script>$(function () {
+    "use strict";
+    
+    $(".popup img").click(function () {
+        var $src = $(this).attr("src");
+        $(".show").fadeIn();
+        $(".img-show img").attr("src", $src);
+    });
+    
+    $("span, .overlay").click(function () {
+        $(".show").fadeOut();
+    });
+    
+});
+    </script>
 <!-- Mirrored from iqonic.design/themes/socialv/html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 16:58:46 GMT -->
 
 </html>
